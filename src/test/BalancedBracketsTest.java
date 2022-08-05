@@ -57,6 +57,10 @@ public class BalancedBracketsTest {
     public void unbalancedWrongDirection() {
         assertEquals(false, BalancedBrackets.hasBalancedBrackets("]["));
     }
+    @Test
+    public void unbalancedWrongDirectionAtTheEnd() {
+        assertEquals(false, BalancedBrackets.hasBalancedBrackets("[]["));
+    }
 
 
 }
