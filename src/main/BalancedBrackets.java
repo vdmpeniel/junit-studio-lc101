@@ -35,15 +35,18 @@ public class BalancedBrackets {
         }
         return brackets == 0;
     }
+
     public static boolean hasBalancedBrackets(String str) {
-        boolean isBalanced = false;
-        AtomicInteger brackets = new AtomicInteger(0);
-        str.chars().mapToObj(ch -> Character.valueOf((char) ch)).forEach(ch -> {
-            if(ch.equals(']') && brackets.get() == 0) { return; }
-            brackets.addAndGet((ch.equals('['))? 1 : (ch.equals(']'))? -1 : 0);
-        });
-        isBalanced = brackets.get() == 0;
-        return isBalanced;
+       AtomicInteger brackets = new AtomicInteger(0);
+       return  str.chars().mapToObj(ch -> Character.valueOf((char) ch))
+               .map( ch -> {
+                   boolean isValid = (ch.equals(']') && brackets.get() == 0)? false : true;
+                   brackets.addAndGet((ch.equals('['))? 1 : (ch.equals(']'))? -1 : 0);
+                   return isValid;
+               })
+               .reduce(true, (aggregate, current) -> {
+                   return aggregate && current;
+                }) && brackets.get() == 0;
     }
 
 }
